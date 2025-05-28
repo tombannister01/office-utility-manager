@@ -12,15 +12,12 @@ import {
   Title,
   Divider,
 } from "@mantine/core";
-import { BuildingDropdown } from "../BuildingSelect";
 import { useAppContext } from "../../context/AppContext";
 
 export function LeadGrid() {
   const {
     user,
-    buildings,
     selectedBuilding,
-    setSelectedBuilding,
     meetings,
     upcoming,
   } = useAppContext();
@@ -31,27 +28,20 @@ export function LeadGrid() {
     <Container my="md" fluid>
       <Text mb="md">Hey, {user.name}</Text>
 
-      <BuildingDropdown
-        buildings={buildings}
-        value={selectedBuilding}
-        onChange={setSelectedBuilding}
-        loading={false}
-      />
-
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md" mt="lg">
-        {/* Meetings column */}
+        {/* Column 1: Meetings */}
         <Stack gap="md">
           <Title order={4}>Meetings</Title>
           {meetings === null ? (
             <Loader />
-          ) : meetings.length ? (
+          ) : meetings.length > 0 ? (
             meetings.map((m) => (
               <Card key={m.id} shadow="sm" p="md" radius="md" withBorder>
                 <Group justify="space-between" mb="xs">
                   <Text fw={600}>{m.roomName}</Text>
                   <Badge>{m.company}</Badge>
                 </Group>
-                <Text size="sm" c="dimmed">
+                <Text size="sm" color="dimmed">
                   {new Date(m.start).toLocaleTimeString([], {
                     hour: "2-digit",
                     minute: "2-digit",
@@ -65,23 +55,25 @@ export function LeadGrid() {
               </Card>
             ))
           ) : (
-            <Text c="dimmed">No meetings</Text>
+            <Text color="dimmed">
+              {selectedBuilding ? "No meetings for this building." : "Select a building above."}
+            </Text>
           )}
         </Stack>
 
-        {/* Upcoming column */}
+        {/* Column 2: Upcoming Events */}
         <Stack gap="md">
           <Title order={4}>Viewings</Title>
           {upcoming === null ? (
             <Loader />
-          ) : upcoming.viewings.length ? (
+          ) : upcoming.viewings.length > 0 ? (
             upcoming.viewings.map((v) => (
               <Card key={v.id} shadow="sm" p="md" radius="md" withBorder>
                 <Group justify="space-between" mb="xs">
                   <Text fw={600}>{v.unit}</Text>
                   <Badge>{v.company}</Badge>
                 </Group>
-                <Text size="sm" c="dimmed">
+                <Text size="sm" color="dimmed">
                   {new Date(v.datetime).toLocaleString(undefined, {
                     weekday: "short",
                     day: "numeric",
@@ -92,7 +84,7 @@ export function LeadGrid() {
               </Card>
             ))
           ) : (
-            <Text c="dimmed">No viewings</Text>
+            <Text color="dimmed">No viewings scheduled.</Text>
           )}
 
           <Divider my="sm" />
@@ -100,7 +92,7 @@ export function LeadGrid() {
           <Title order={4}>Move in/out</Title>
           {upcoming === null ? (
             <Loader />
-          ) : upcoming.moveInOut.length ? (
+          ) : upcoming.moveInOut.length > 0 ? (
             upcoming.moveInOut.map((m) => (
               <Card key={m.id} shadow="sm" p="md" radius="md" withBorder>
                 <Group justify="space-between" mb="xs">
@@ -116,7 +108,7 @@ export function LeadGrid() {
               </Card>
             ))
           ) : (
-            <Text c="dimmed">No moves</Text>
+            <Text c="dimmed">No move‐ins/outs scheduled.</Text>
           )}
         </Stack>
       </SimpleGrid>

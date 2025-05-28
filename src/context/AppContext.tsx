@@ -1,12 +1,11 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import type { User } from "../types/General";
+import type { User, Building } from "../types/General";
 import type { Meeting } from "../types/AvailabilityForce";
+import type { Room } from "../types/AvailabilityForce";
 import type { Issue } from "../types/IssueForce";
 import type { UpcomingEventsResponse } from "../types/CustomerForce";
-import type { Building } from "../types/General";
-
 
 interface AppContextValue {
   user: User | null;
@@ -14,6 +13,7 @@ interface AppContextValue {
   selectedBuilding: string | null;
   setSelectedBuilding: (id: string) => void;
   meetings: Meeting[] | null;
+  rooms: Room[] | null;
   upcoming: UpcomingEventsResponse | null;
   issues: Issue[] | null;
   openIssuesDrawer: () => void;
@@ -27,7 +27,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [buildings, setBuildings] = useState<Building[]>([]);
   const [selectedBuilding, _setSelectedBuilding] = useState<string | null>(null);
+
   const [meetings, setMeetings] = useState<Meeting[] | null>(null);
+  const [rooms, setRooms] = useState<Room[] | null>(null);
+
   const [upcoming, setUpcoming] = useState<UpcomingEventsResponse | null>(null);
   const [issues, setIssues] = useState<Issue[] | null>(null);
   const [issuesDrawerOpened, setIssuesDrawerOpened] = useState(false);
@@ -50,7 +53,18 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       });
   }, [user]);
 
-  // 3️⃣ load meetings when selectedBuilding or user changes
+  // 3️⃣ fetch rooms when selectedBuilding changes
+  useEffect(() => {
+    if (!selectedBuilding) return setRooms(null);
+    fetch(`/api/availability-force/meeting-rooms/${selectedBuilding}`, {
+      cache: "no-store",
+    })
+      .then((r) => r.json())
+      .then((d: { rooms: Room[] }) => setRooms(d.rooms))
+      .catch(() => setRooms([]));
+  }, [selectedBuilding]);
+
+  // 4️⃣ load meetings when selectedBuilding or user changes
   useEffect(() => {
     if (!user || !selectedBuilding) return setMeetings(null);
     fetch(
@@ -58,32 +72,29 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       { cache: "no-store" }
     )
       .then((r) => r.json())
-      .then((d: { meetings: Meeting[] }) => setMeetings(d.meetings));
+      .then((d: { meetings: Meeting[] }) => setMeetings(d.meetings))
+      .catch(() => setMeetings([]));
   }, [user, selectedBuilding]);
 
-  // 4️⃣ load upcoming events once user ready
+  // 5️⃣ load upcoming events once user ready
   useEffect(() => {
     if (!user) return setUpcoming(null);
     fetch(`/api/customer-force/upcoming-events/${user.id}`, {
       cache: "no-store",
     })
       .then((r) => r.json())
-      .then(setUpcoming);
+      .then(setUpcoming)
+      .catch(() => setUpcoming(null));
   }, [user]);
 
-  // 5️⃣ load issues when drawer opens
+  // 6️⃣ load issues when drawer opens
   useEffect(() => {
-    if (!issuesDrawerOpened || !selectedBuilding) {
-      setIssues(null);
-      return;
-    }
-
+    if (!issuesDrawerOpened || !selectedBuilding) return setIssues(null);
     fetch(`/api/issue-force/meeting-room-issues/${selectedBuilding}`, {
       cache: "no-store",
     })
       .then((r) => r.json())
-      // ← assume the response JSON is Issue[]
-      .then((arr: Issue[]) => setIssues(arr))
+      .then((d: Issue[]) => setIssues(d))
       .catch(() => setIssues([]));
   }, [issuesDrawerOpened, selectedBuilding]);
 
@@ -101,6 +112,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         selectedBuilding,
         setSelectedBuilding,
         meetings,
+        rooms,
         upcoming,
         issues,
         issuesDrawerOpened,
@@ -115,6 +127,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
 export function useAppContext(): AppContextValue {
   const ctx = useContext(AppContext);
-  if (!ctx) throw new Error("useAppContext must be inside AppProvider");
+  if (!ctx) throw new Error("useAppContext must be used inside AppProvider");
   return ctx;
 }
