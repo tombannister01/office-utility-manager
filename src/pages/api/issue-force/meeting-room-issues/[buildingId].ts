@@ -1,13 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-
-export interface Issue {
-  id: string;
-  roomId: string;
-  roomName: string;
-  title: string;
-  status: "open" | "in_progress" | "resolved";
-  createdAt: string;
-}
+import { Issue } from "../../../../types/IssueForce";
 
 const meetingRoomIssues: Record<string, Issue[]> = {
   bldg_stanley_001: [

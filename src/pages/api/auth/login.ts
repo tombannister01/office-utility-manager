@@ -1,9 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-
-export interface User {
-  id: string;
-  name: string;
-}
+import { User } from "../../../types/General";
 
 const users: Record<string, User> = {
   user_a12f7d3e: { id: "user_a12f7d3e", name: "Joe Bloggs" },

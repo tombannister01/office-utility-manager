@@ -1,0 +1,46 @@
+.navbarBase {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  padding: var(--mantine-spacing-md);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  background: var(--mantine-color-white);
+}
+
+.navbarLeft {
+  left: 0;
+  width: 80px;
+  border-right: 1px solid var(--mantine-color-gray-3);
+}
+
+.navbarRight {
+  right: 0;
+  width: 80px;
+  border-left: 1px solid var(--mantine-color-gray-3);
+}
+
+.navbarMain {
+  flex: 1;
+  margin-top: 50px;
+}
+
+.link {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--mantine-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mantine-color-gray-7);
+}
+
+.link:hover {
+  background-color: var(--mantine-color-gray-0);
+}
+
+.link[data-active] {
+  background-color: var(--mantine-color-blue-light);
+  color: var(--mantine-color-blue-light-color);
+}

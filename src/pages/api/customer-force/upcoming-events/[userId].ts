@@ -1,23 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-
-export interface Viewing {
-  id: string;
-  unit: string;
-  company: string;
-  datetime: string;
-}
-
-export interface MoveInOut {
-  id: string;
-  unit: string;
-  company: string;
-  datetime: string;
-}
-
-export interface UpcomingEventsResponse {
-  viewings: Viewing[];
-  moveInOut: MoveInOut[];
-}
+import { UpcomingEventsResponse } from "../../../../types/CustomerForce";
 
 const dataByUser: Record<string, UpcomingEventsResponse> = {
   user_a12f7d3e: {

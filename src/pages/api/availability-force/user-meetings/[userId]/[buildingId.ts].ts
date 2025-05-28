@@ -1,16 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-
-export interface Meeting {
-  id: string;
-  roomId: string;
-  roomName: string;
-  company: string;
-  start: string;
-  end: string;
-}
-export interface MeetingsResponse {
-  meetings: Meeting[];
-}
+import {
+  Meeting,
+  MeetingsResponse,
+} from "../../../../../types/AvailabilityForce";
 
 const userMeetings: Record<string, Record<string, Meeting[]>> = {
   user_a12f7d3e: {

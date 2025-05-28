@@ -1,18 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-
-export interface Room {
-  id: string;
-  roomName: string;
-  capacity: number;
-  price: number;
-  features: string[];
-  isAvailable: boolean;
-  imgUrl: string;
-}
-
-export interface RoomsResponse {
-  rooms: Room[];
-}
+import { Room, RoomsResponse } from "../../../../types/AvailabilityForce";
 
 const roomsPerBuilding: Record<string, Room[]> = {
   bldg_stanley_001: [
