@@ -36,5 +36,11 @@ export const useUI = () => {
     localStorage.setItem("building", building)
     context.setSelectedBuilding(building);
   }
-  return { selectedBuilding: context.selectedBuilding, setSelectedBuilding: setBuilding };
+  return {
+    selectedBuilding: context.selectedBuilding,
+    setSelectedBuilding: setBuilding,
+    issuesDrawerOpened: context.issuesDrawerOpened,
+    openIssuesDrawer: context.openIssuesDrawer,
+    closeIssuesDrawer: context.closeIssuesDrawer
+  };
 };
