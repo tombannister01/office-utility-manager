@@ -15,7 +15,7 @@ import { UIProvider, useUI } from "../context/UIContext";
 import { useBuildings } from "../hooks/useBuildings";
 import { LeftNavbar } from "../components/LeftNavbar/LeftNavbar";
 import { RightNavbar } from "../components/RightNavbar/RightNavbar";
-import { BuildingDropdown } from "../components/BuildingSelect";
+import { BuildingDropdown } from "../components/BuildingDropdown";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,7 +61,6 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
           top: 0,
           right: 130,
           padding: "var(--mantine-spacing-md)",
-          backgroundColor: "#fff",
           zIndex: 5,
           width: 200,
         }}
@@ -71,6 +70,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
           value={selectedBuilding}
           onChange={setSelectedBuilding}
           loading={loadingBuildings}
+
         />
       </Box >
 
@@ -100,12 +100,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" {...mantineHtmlProps}>
+    <html lang="en" {...mantineHtmlProps} style={{ backgroundColor: "#F9F9F9" }}>
       <head>
+
         <ColorSchemeScript />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{ backgroundColor: "#F9F9F9" }}
       >
         <MantineProvider
           theme={{

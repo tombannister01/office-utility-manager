@@ -10,6 +10,7 @@ import {
   Stack,
   Title,
 } from "@mantine/core";
+import { IconQrcode } from "@tabler/icons-react";
 import { useMeetings } from "../../hooks/useMeetings";
 import { useUpcoming } from "../../hooks/useUpcoming";
 import { useAuth } from "../../context/AuthContext";
@@ -46,37 +47,41 @@ export function LeadGrid() {
       </Text>
 
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md" mt="lg">
-        {/* Column 1: Meetings */}
         <Stack gap="md">
           <Title order={4}>Meetings</Title>
           {loadingMeetings ? (
             <Loader />
           ) : meetings && meetings.length > 0 ? (
             meetings.map((m: Meeting) => (
-              <Card key={m.id} shadow="sm" p="md" radius="md" withBorder>
+              <Card key={m.id} p="md" radius="md" withBorder>
+
                 <Group justify="space-between" mb="xs">
                   <Text fw={600}>
                     {m.roomName} – {m.company}
                   </Text>
                 </Group>
-                <Text size="sm" c="dimmed">
-                  {new Date(m.start).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}{" "}
-                  –{" "}
-                  {new Date(m.end).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </Text>
+
+                <Group align="center" justify="space-between" gap="xs" c="dimmed">
+                  <Text size="sm">
+                    {new Date(m.start).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}{" "}
+                    –{" "}
+                    {new Date(m.end).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </Text>
+                  <IconQrcode stroke={2} />
+                </Group>
               </Card>
             ))
           ) : (
             <Text c="dimmed">
               {selectedBuilding
                 ? "No meetings for this building."
-                : "Select a building above."}
+                : "Select a building using the dropdown."}
             </Text>
           )}
         </Stack>

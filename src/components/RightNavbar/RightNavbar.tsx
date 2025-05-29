@@ -45,7 +45,7 @@ export function RightNavbar() {
         {isLoading ? (
           <Loader />
         ) : (issues ?? []).length === 0 ? (
-          <Text>No issues</Text>
+          <Text>No issues, Please select a building</Text>
         ) : (
           <Stack gap="md">
             {(issues ?? []).map((i) => (

@@ -25,14 +25,14 @@ const mainLinks: NavItem[] = [
 ];
 
 const bottomLinks: NavItem[] = [
-  { href: "/", Icon: IconLogin, label: "Login" },
   { href: "/", Icon: IconBuilding, label: "Buildings" },
+  { href: "/", Icon: IconLogin, label: "Login" },
 ];
 
 export function LeftNavbar() {
   return (
     <nav className={`${classes.navbarBase} ${classes.navbarLeft}`}>
-      <div className={classes.navbarLogo}>
+      <div className={classes.navbarLogo} onClick={() => window.location.href = '/'} style={{ cursor: 'pointer' }}>
         <IconTopologyStarRing3 stroke={2} size={32} />
       </div>
 

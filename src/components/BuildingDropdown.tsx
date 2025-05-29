@@ -24,7 +24,6 @@ export function BuildingDropdown({
     <Select
       data={buildings.map((building) => ({ value: building.id, label: building.name }))}
       placeholder={loading ? "Loading…" : "Select building"}
-      searchable
       value={value}
       onChange={(v) => v && onChange(v)}
       disabled={loading}

@@ -1,16 +1,28 @@
-"use client";
+'use client';
 
-import { Container, SimpleGrid, Card, Text, Loader, Box, Title } from "@mantine/core";
-import { useUI } from "../../context/UIContext";
-import { useRooms } from "../../hooks/useRooms";
-import { Room } from "../../types/AvailabilityForce";
+import {
+  Container,
+  SimpleGrid,
+  Card,
+  Text,
+  Loader,
+  Box,
+  Title,
+  Button,
+  Group,
+} from '@mantine/core';
+import Image from 'next/image';
+import {
+  IconUsers,
+  IconCurrencyPound,
+} from '@tabler/icons-react';
+import { useUI } from '../../context/UIContext';
+import { useRooms } from '../../hooks/useRooms';
+import type { Room } from '../../types/AvailabilityForce';
 
 export default function MeetingRoomBookings() {
   const { selectedBuilding } = useUI();
-  const {
-    data: rooms,
-    isLoading: loadingRooms,
-  } = useRooms();
+  const { data: rooms, isLoading: loadingRooms } = useRooms();
 
   if (!selectedBuilding) {
     return (
@@ -27,27 +39,70 @@ export default function MeetingRoomBookings() {
       </Container>
     );
   }
+  const availableRooms = (rooms ?? []).filter((r) => r.isAvailable);
 
   return (
     <Container my="md" fluid>
       <Box mb="xl">
-        <Title order={2} mb="xl">Meeting Room Bookings</Title>
+        <Title order={2} mb="xs">
+          Meeting Room Bookings
+        </Title>
         <Text size="sm" c="dimmed">
           Live Availability
         </Text>
       </Box>
+
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
-        {(rooms?.length ?? 0) > 0 ? (
-          rooms!.map((r: Room) => (
-            <Card key={r.id} shadow="sm" p="lg" radius="md" withBorder>
-              <Text fw={600}>{r.roomName}</Text>
-              <Box mt="sm">
-                <Text size="sm" c="dimmed">
-                  Capacity: {r.capacity}
-                </Text>
-                <Text size="sm" c="dimmed">
-                  Price: £{r.price}
-                </Text>
+        {availableRooms.length > 0 ? (
+          availableRooms.map((r: Room) => (
+            <Card key={r.id} shadow="none" radius="md" withBorder>
+              <Card.Section>
+                <Box
+                  style={{
+                    position: 'relative',
+                    width: '100%',
+                    height: 0,
+                    paddingBottom: '56%',
+                    backgroundColor: 'var(--mantine-color-gray-0)',
+                  }}
+                >
+                  <Image
+                    src={r.imgUrl && r.imgUrl.trim() ? r.imgUrl : '/images/rooms/placeholder.webp'}
+                    alt={r.roomName}
+                    fill
+                    style={{
+                      objectFit: 'cover',
+                      borderTopLeftRadius: 4,
+                      borderTopRightRadius: 4,
+                    }}
+                  />
+                </Box>
+              </Card.Section>
+
+              <Text fw={600} mt="sm">
+                {r.roomName}
+              </Text>
+
+              <Group gap="xl" mt="xs">
+                <Group gap={4} align="center">
+                  <IconUsers size={18} stroke={2} />
+                  <Text size="sm">{r.capacity}</Text>
+                </Group>
+                <Group gap={4} align="center">
+                  <IconCurrencyPound size={18} stroke={2} />
+                  <Text size="sm">{r.price}</Text>
+                </Group>
+              </Group>
+
+              <Box mt="md" style={{ textAlign: 'right' }}>
+                <Button
+                  size="xs"
+                  variant="filled"
+                  radius="xl"
+                  color="blue"
+                >
+                  Available
+                </Button>
               </Box>
             </Card>
           ))
