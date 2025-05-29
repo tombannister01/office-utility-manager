@@ -1,6 +1,7 @@
 "use client";
 
 import { Select } from "@mantine/core";
+import { useEffect } from "react";
 
 export interface Building {
   id: string;
@@ -20,6 +21,13 @@ export function BuildingDropdown({
   onChange,
   loading,
 }: BuildingDropdownProps) {
+
+  useEffect(() => {
+    const buildingChoice = localStorage.getItem("building");
+    if (buildingChoice) {
+      onChange(buildingChoice);
+    }
+  }, [onChange])
   return (
     <Select
       data={buildings.map((building) => ({ value: building.id, label: building.name }))}

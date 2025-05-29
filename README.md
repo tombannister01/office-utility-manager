@@ -1,6 +1,5 @@
 # Setup Steps
 
-- cd into the base project
 - Install packages with `npm i`
 - To start the dev server run `npm run dev`
 - To create an optimised prod build run `npm run build`
@@ -48,6 +47,10 @@ https://office-utility-manager.vercel.app/
 ## Fetching
 
 - **Tanstack/react-query**: Simplifies data fetching, caching, and synchronization in React apps. It keeps data fresh, reduces unnecessary network requests
+
+## Local Storage
+
+- Persisted select option in local storage
 
 ## What I could have done with more time
 

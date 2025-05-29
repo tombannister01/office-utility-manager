@@ -29,7 +29,12 @@ export function UIProvider({ children }: React.PropsWithChildren<object>) {
 }
 
 export const useUI = () => {
-  const c = useContext(UIContext);
-  if (!c) throw new Error("useUI must be inside UIProvider");
-  return c;
+  const context = useContext(UIContext);
+
+  if (!context) throw new Error("useUI must be inside UIProvider");
+  const setBuilding = (building: string) => {
+    localStorage.setItem("building", building)
+    context.setSelectedBuilding(building);
+  }
+  return { selectedBuilding: context.selectedBuilding, setSelectedBuilding: setBuilding };
 };

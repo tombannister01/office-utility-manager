@@ -8,7 +8,6 @@ import {
   Loader,
   Box,
   Title,
-  Button,
   Group,
 } from '@mantine/core';
 import Image from 'next/image';
@@ -55,7 +54,7 @@ export default function MeetingRoomBookings() {
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
         {availableRooms.length > 0 ? (
           availableRooms.map((r: Room) => (
-            <Card key={r.id} shadow="none" radius="md">
+            <Card key={r.id} shadow="none" radius="md" style={{ cursor: "pointer" }}>
               <Card.Section>
                 <Box
                   style={{
@@ -95,14 +94,21 @@ export default function MeetingRoomBookings() {
               </Group>
 
               <Box mt="md" style={{ textAlign: 'right' }}>
-                <Button
+                <Text
                   size="xs"
-                  variant="filled"
-                  radius="xl"
-                  color="blue"
+                  fw={600}
+                  px="md"
+                  py={6}
+                  style={{
+                    display: 'inline-block',
+                    borderRadius: 999,
+                    fontSize: '0.85rem',
+                    letterSpacing: 0.5,
+                    userSelect: 'none',
+                  }}
                 >
                   Available
-                </Button>
+                </Text>
               </Box>
             </Card>
           ))
