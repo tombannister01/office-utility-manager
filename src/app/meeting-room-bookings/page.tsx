@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, SimpleGrid, Card, Text, Loader, Box } from "@mantine/core";
+import { Container, SimpleGrid, Card, Text, Loader, Box, Title } from "@mantine/core";
 import { useUI } from "../../context/UIContext";
 import { useRooms } from "../../hooks/useRooms";
 import { Room } from "../../types/AvailabilityForce";
@@ -30,6 +30,12 @@ export default function MeetingRoomBookings() {
 
   return (
     <Container my="md" fluid>
+      <Box mb="xl">
+        <Title order={2} mb="xl">Meeting Room Bookings</Title>
+        <Text size="sm" c="dimmed">
+          Live Availability
+        </Text>
+      </Box>
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
         {(rooms?.length ?? 0) > 0 ? (
           rooms!.map((r: Room) => (

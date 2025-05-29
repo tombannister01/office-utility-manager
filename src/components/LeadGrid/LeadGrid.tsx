@@ -9,7 +9,6 @@ import {
   Group,
   Stack,
   Title,
-  Divider,
 } from "@mantine/core";
 import { useMeetings } from "../../hooks/useMeetings";
 import { useUpcoming } from "../../hooks/useUpcoming";
@@ -109,7 +108,6 @@ export function LeadGrid() {
             <Text c="dimmed">No viewings scheduled.</Text>
           )}
 
-          <Divider my="sm" />
 
           <Title order={4}>Move in/out</Title>
           {loadingUpcoming ? (

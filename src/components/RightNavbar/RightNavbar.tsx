@@ -29,6 +29,7 @@ export function RightNavbar() {
   const { issuesDrawerOpened, openIssuesDrawer, closeIssuesDrawer } = useUI();
   const { data: issues, isLoading } = useIssues();
 
+  // wire up the button action
   navItems[0].action = openIssuesDrawer;
 
   return (
@@ -41,13 +42,13 @@ export function RightNavbar() {
         position="right"
         size="sm"
       >
-        {issuesDrawerOpened && isLoading ? (
+        {isLoading ? (
           <Loader />
-        ) : issues && issues.length === 0 ? (
+        ) : (issues ?? []).length === 0 ? (
           <Text>No issues</Text>
         ) : (
           <Stack gap="md">
-            {issues?.map((i) => (
+            {(issues ?? []).map((i) => (
               <Card key={i.id} withBorder radius="md" p="md">
                 <Group justify="space-between" align="center" gap="xs">
                   <Text fw={600}>{i.roomName}</Text>

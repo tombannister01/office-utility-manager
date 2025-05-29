@@ -45,13 +45,12 @@ export default function handler(
   res: NextApiResponse<Issue[] | { error: string }>
 ) {
   const { buildingId } = req.query as { buildingId: string };
-  const tickets = meetingRoomIssues[buildingId];
-
-  if (!tickets) {
+  const issues = meetingRoomIssues[buildingId];
+  if (!issues) {
     return res
       .status(404)
       .json({ error: `No issues found for building ${buildingId}` });
   }
 
-  return res.status(200).json(tickets);
+  res.status(200).json(issues);
 }

@@ -109,7 +109,6 @@ export default function RootLayout({
       >
         <MantineProvider
           theme={{
-            // override Text defaults
             components: {
               Text: {
                 defaultProps: {
@@ -121,6 +120,13 @@ export default function RootLayout({
                   c: "#545F71",
                 },
               },
+            },
+            shadows: {
+              xs: "none",
+              sm: "none",
+              md: "none",
+              lg: "none",
+              xl: "none",
             },
           }}
         >
