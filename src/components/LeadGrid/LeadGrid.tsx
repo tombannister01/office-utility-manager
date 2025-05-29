@@ -7,7 +7,6 @@ import {
   Text,
   Loader,
   Group,
-  Badge,
   Stack,
   Title,
   Divider,
@@ -26,7 +25,7 @@ export function LeadGrid() {
 
   return (
     <Container my="md" fluid>
-      <Text mb="md">Hey, {user.name}</Text>
+      <Text mb="md" size="xl" fw={700}>Hey, {user.name}</Text>
 
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md" mt="lg">
         {/* Column 1: Meetings */}
@@ -38,10 +37,9 @@ export function LeadGrid() {
             meetings.map((m) => (
               <Card key={m.id} shadow="sm" p="md" radius="md" withBorder>
                 <Group justify="space-between" mb="xs">
-                  <Text fw={600}>{m.roomName}</Text>
-                  <Badge>{m.company}</Badge>
+                  <Text fw={600}>{m.roomName} - {m.company}</Text>
                 </Group>
-                <Text size="sm" color="dimmed">
+                <Text size="sm" c="dimmed">
                   {new Date(m.start).toLocaleTimeString([], {
                     hour: "2-digit",
                     minute: "2-digit",
@@ -55,7 +53,7 @@ export function LeadGrid() {
               </Card>
             ))
           ) : (
-            <Text color="dimmed">
+            <Text c="dimmed">
               {selectedBuilding ? "No meetings for this building." : "Select a building above."}
             </Text>
           )}
@@ -70,10 +68,9 @@ export function LeadGrid() {
             upcoming.viewings.map((v) => (
               <Card key={v.id} shadow="sm" p="md" radius="md" withBorder>
                 <Group justify="space-between" mb="xs">
-                  <Text fw={600}>{v.unit}</Text>
-                  <Badge>{v.company}</Badge>
+                  <Text fw={600}>{v.unit} - {v.company}</Text>
                 </Group>
-                <Text size="sm" color="dimmed">
+                <Text size="sm" c="dimmed">
                   {new Date(v.datetime).toLocaleString(undefined, {
                     weekday: "short",
                     day: "numeric",
@@ -84,10 +81,12 @@ export function LeadGrid() {
               </Card>
             ))
           ) : (
-            <Text color="dimmed">No viewings scheduled.</Text>
+            <Text c="dimmed">No viewings scheduled.</Text>
           )}
 
           <Divider my="sm" />
+
+          {/* Column 3: Move in/out */}
 
           <Title order={4}>Move in/out</Title>
           {upcoming === null ? (
@@ -96,8 +95,7 @@ export function LeadGrid() {
             upcoming.moveInOut.map((m) => (
               <Card key={m.id} shadow="sm" p="md" radius="md" withBorder>
                 <Group justify="space-between" mb="xs">
-                  <Text fw={600}>{m.unit}</Text>
-                  <Badge>{m.company}</Badge>
+                  <Text fw={600}>{m.unit} - {m.company}</Text>
                 </Group>
                 <Text size="sm" c="dimmed">
                   {new Date(m.datetime).toLocaleString(undefined, {

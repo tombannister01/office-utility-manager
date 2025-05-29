@@ -106,7 +106,23 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <MantineProvider>
+        <MantineProvider
+          theme={{
+            // override Text defaults
+            components: {
+              Text: {
+                defaultProps: {
+                  c: "#545F71",
+                },
+              },
+              Title: {
+                defaultProps: {
+                  c: "#545F71",
+                },
+              },
+            },
+          }}
+        >
           <AppProvider>
             <LayoutContent>{children}</LayoutContent>
           </AppProvider>

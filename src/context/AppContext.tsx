@@ -93,6 +93,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     fetch(`/api/issue-force/meeting-room-issues/${selectedBuilding}`, {
       cache: "no-store",
     })
+
       .then((r) => r.json())
       .then((d: Issue[]) => setIssues(d))
       .catch(() => setIssues([]));

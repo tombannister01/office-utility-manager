@@ -1,9 +1,28 @@
 "use client";
 
-import { Drawer, Button, Stack, Loader, Text, Card, Group, Box } from "@mantine/core";
+import {
+  Drawer,
+  Stack,
+  Loader,
+  Text,
+  Card,
+  Group,
+  Box,
+  UnstyledButton,
+} from "@mantine/core";
+import { IconTag, TablerIcon } from "@tabler/icons-react";
 import { format } from "date-fns";
 import { useAppContext } from "../../context/AppContext";
 import classes from "../styles/Navbar.module.css";
+
+
+const navItems: Array<{
+  Icon: TablerIcon;
+  label: string;
+  action: () => void;
+}> = [
+    { Icon: IconTag, label: "View issues", action: () => { } },
+  ];
 
 export function RightNavbar() {
   const {
@@ -12,6 +31,8 @@ export function RightNavbar() {
     openIssuesDrawer,
     closeIssuesDrawer,
   } = useAppContext();
+
+  navItems[0].action = openIssuesDrawer;
 
   return (
     <>
@@ -23,13 +44,13 @@ export function RightNavbar() {
         position="right"
         size="sm"
       >
-        {issues === null ? (
+        {issuesDrawerOpened && issues === null ? (
           <Loader />
-        ) : issues.length === 0 ? (
+        ) : issues && issues.length === 0 ? (
           <Text>No issues</Text>
         ) : (
           <Stack gap="md">
-            {issues.map((i) => (
+            {issues?.map((i) => (
               <Card
                 key={i.id}
                 withBorder
@@ -37,7 +58,6 @@ export function RightNavbar() {
                 p="md"
                 style={{ backgroundColor: "#fff" }}
               >
-                {/* Room & timestamp */}
                 <Group justify="space-between" align="center" gap="xs">
                   <Text fw={600}>{i.roomName}</Text>
                   <Text size="xs" c="dimmed">
@@ -45,12 +65,10 @@ export function RightNavbar() {
                   </Text>
                 </Group>
 
-                {/* Title */}
                 <Text mt="xs" mb="xs">
                   {i.title}
                 </Text>
 
-                {/* Status */}
                 <Box>
                   <Text size="sm" c={i.status === "open" ? "red" : "green"}>
                     {i.status.replace("_", " ")}
@@ -62,12 +80,18 @@ export function RightNavbar() {
         )}
       </Drawer>
 
-      {/* Use the exact same classes as LeftNavbar */}
       <nav className={`${classes.navbarBase} ${classes.navbarRight}`}>
-        <Stack gap="md" align="center" justify="center">
-          <Button onClick={openIssuesDrawer} variant="outline" size="sm">
-            Issues
-          </Button>
+        <Stack justify="center" align="center" gap="md">
+          {navItems.map(({ Icon, label, action }) => (
+            <UnstyledButton
+              key={label}
+              onClick={action}
+              className={classes.link}
+              aria-label={label}
+            >
+              <Icon stroke={2} size={24} />
+            </UnstyledButton>
+          ))}
         </Stack>
       </nav>
     </>

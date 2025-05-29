@@ -20,6 +20,12 @@
   width: 80px;
   border-left: 1px solid var(--mantine-color-gray-3);
 }
+.navbarLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--mantine-spacing-md);
+}
 
 .navbarMain {
   flex: 1;
@@ -44,3 +50,5 @@
   background-color: var(--mantine-color-blue-light);
   color: var(--mantine-color-blue-light-color);
 }
+
+
