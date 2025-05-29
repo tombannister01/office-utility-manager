@@ -53,7 +53,7 @@ export function LeadGrid() {
             <Loader />
           ) : meetings && meetings.length > 0 ? (
             meetings.map((m: Meeting) => (
-              <Card key={m.id} p="md" radius="md" withBorder>
+              <Card key={m.id} p="md" radius="md">
 
                 <Group justify="space-between" mb="xs">
                   <Text fw={600}>
@@ -62,7 +62,7 @@ export function LeadGrid() {
                 </Group>
 
                 <Group align="center" justify="space-between" gap="xs" c="dimmed">
-                  <Text size="sm">
+                  <Text size="sm" c="dimmed">
                     {new Date(m.start).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -93,7 +93,7 @@ export function LeadGrid() {
             <Loader />
           ) : upcoming && upcoming.viewings.length > 0 ? (
             upcoming.viewings.map((v: Viewing) => (
-              <Card key={v.id} shadow="sm" p="md" radius="md" withBorder>
+              <Card key={v.id} shadow="sm" p="md" radius="md">
                 <Group justify="space-between" mb="xs">
                   <Text fw={600}>
                     {v.unit} – {v.company}
@@ -119,7 +119,7 @@ export function LeadGrid() {
             <Loader />
           ) : upcoming && upcoming.moveInOut.length > 0 ? (
             upcoming.moveInOut.map((m: MoveInOut) => (
-              <Card key={m.id} shadow="sm" p="md" radius="md" withBorder>
+              <Card key={m.id} shadow="sm" p="md" radius="md">
                 <Group justify="space-between" mb="xs">
                   <Text fw={600}>
                     {m.unit} – {m.company}

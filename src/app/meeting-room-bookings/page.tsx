@@ -55,7 +55,7 @@ export default function MeetingRoomBookings() {
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
         {availableRooms.length > 0 ? (
           availableRooms.map((r: Room) => (
-            <Card key={r.id} shadow="none" radius="md" withBorder>
+            <Card key={r.id} shadow="none" radius="md">
               <Card.Section>
                 <Box
                   style={{

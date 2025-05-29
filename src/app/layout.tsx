@@ -29,7 +29,6 @@ const geistMono = Geist_Mono({
 const queryClient = new QueryClient();
 
 
-
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const { selectedBuilding, setSelectedBuilding } = useUI();
   const { data: buildings = [], isLoading: loadingBuildings } = useBuildings();
@@ -104,6 +103,7 @@ export default function RootLayout({
       <head>
 
         <ColorSchemeScript />
+        <title>Office Utility Manager</title>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

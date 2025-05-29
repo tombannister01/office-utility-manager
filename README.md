@@ -3,10 +3,8 @@
 - cd into the base project
 - Install packages with `npm i`
 - To start the dev server run `npm run dev`
-- To run the UI tests run `npm run test`
 - To create an optimised prod build run `npm run build`
 - To lint the project run `npm run lint`
-- If you need a continous test suite running to watch for changes and re run tests run `npm run test:watch`
 
 ## Link to Vercel Deployment
 
@@ -34,8 +32,8 @@ https://office-utility-manager.vercel.app/
 
 ## Testing
 
-- **React Testing Library + Jest** (focus on user centric tests)
-- Setup with `next/jest` preset, `jest.setup.ts`, and a `test-utils/render` wrapper
+- **React Testing Library + Jest**: This was the plan to include testing but had to leave due to time constraints
+-
 
 ## Routing & Multi Page
 
@@ -50,4 +48,17 @@ https://office-utility-manager.vercel.app/
 
 ## Fetching
 
-- Tanstack
+- **Tanstack/react-query**: Simplifies data fetching, caching, and synchronization in React apps. It keeps data fresh, reduces unnecessary network requests
+
+## What I could have done with more time
+
+- Implemented UI component testing for each of the components used
+- Used a redux based pattern such as redux toolkit to make the app more scalable
+- Included the notifications tab on the right navbar
+- Better error handling using react suspense and error boundaries
+- Lazy loading for components that werent required on initial load
+
+## Future Improvements
+
+- Modal for QR code per meeting room
+- Ability to book meetings through the app
