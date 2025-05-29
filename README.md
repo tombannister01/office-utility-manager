@@ -12,7 +12,7 @@ https://office-utility-manager.vercel.app/
 
 ## Framework & Rendering
 
-- **Next.js** (SSR, file based routing, App router)
+- **Next.js** (SSR, file based routing, App router, built in lazy loading for app router pages)
 - **Turbopack**: <br>New next feature to rival Vites SWC. However, doesn't work correctly with component libraries due to lack of support for hydration issues
 
 ## Language & Tooling
@@ -22,8 +22,8 @@ https://office-utility-manager.vercel.app/
 
 ## State Management
 
-- **Context API**: <br> lightweight, built in; ideal for a 3-4 hour test. I separated the context to avoid triggering unecessary re-renders. And used lightweight custom hooks to interact with context to make it more reusable and extendable
-- **Redux Toolkit** <br>I initially wanted to incorporate redux toolkit but for time constraints and simplicity I decided to go for context. In a real life scenario where projects need to be scalable a redux based solution is a better option
+- **Context API**: <br> lightweight, built in. Ideal for a smaller project. I separated the context to avoid triggering unecessary re-renders. And used lightweight custom hooks to interact with context to make it more reusable and extendable
+- **Redux Toolkit** <br>I initially wanted to incorporate redux toolkit but for time constraints and simplicity I decided to go for context. In a real life scenario where projects need to be scalable, a redux based solution is a better option
 
 ## UI Library
 
@@ -32,13 +32,12 @@ https://office-utility-manager.vercel.app/
 
 ## Testing
 
-- **React Testing Library + Jest**: This was the plan to include testing but had to leave due to time constraints
--
+- **React Testing Library + Jest**: This was the plan to include UI component testing but had to leave due to time constraints
 
 ## Routing & Multi Page
 
 - File based routes: `/`, `/meeting-room-bookings`.
-- Shared layout (`app/layout.tsx`) for nav, context providers, global styles
+- Shared global layout (`app/layout.tsx`) for nav, context providers, global styles
 
 ## Backend Mock & Data
 
@@ -56,7 +55,7 @@ https://office-utility-manager.vercel.app/
 - Used a redux based pattern such as redux toolkit to make the app more scalable
 - Included the notifications tab on the right navbar
 - Better error handling using react suspense and error boundaries
-- Lazy loading for components that werent required on initial load
+- Image caching
 
 ## Future Improvements
 
