@@ -1,10 +1,16 @@
 "use client";
 
 import { Container, SimpleGrid, Card, Text, Loader, Box } from "@mantine/core";
-import { useAppContext } from "../../context/AppContext";
+import { useUI } from "../../context/UIContext";
+import { useRooms } from "../../hooks/useRooms";
+import { Room } from "../../types/AvailabilityForce";
 
 export default function MeetingRoomBookings() {
-  const { selectedBuilding, rooms } = useAppContext();
+  const { selectedBuilding } = useUI();
+  const {
+    data: rooms,
+    isLoading: loadingRooms,
+  } = useRooms();
 
   if (!selectedBuilding) {
     return (
@@ -14,7 +20,7 @@ export default function MeetingRoomBookings() {
     );
   }
 
-  if (rooms === null) {
+  if (loadingRooms || rooms === null) {
     return (
       <Container my="md" fluid>
         <Loader />
@@ -25,8 +31,8 @@ export default function MeetingRoomBookings() {
   return (
     <Container my="md" fluid>
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
-        {rooms.length > 0 ? (
-          rooms.map((r) => (
+        {(rooms?.length ?? 0) > 0 ? (
+          rooms!.map((r: Room) => (
             <Card key={r.id} shadow="sm" p="lg" radius="md" withBorder>
               <Text fw={600}>{r.roomName}</Text>
               <Box mt="sm">

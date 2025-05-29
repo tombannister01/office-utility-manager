@@ -7,9 +7,12 @@ import {
   MantineProvider,
   mantineHtmlProps,
   Box,
-  Loader,
+  Loader
 } from "@mantine/core";
-import { AppProvider, useAppContext } from "../context/AppContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AuthProvider } from "../context/AuthContext";
+import { UIProvider, useUI } from "../context/UIContext";
+import { useBuildings } from "../hooks/useBuildings";
 import { LeftNavbar } from "../components/LeftNavbar/LeftNavbar";
 import { RightNavbar } from "../components/RightNavbar/RightNavbar";
 import { BuildingDropdown } from "../components/BuildingSelect";
@@ -23,18 +26,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const queryClient = new QueryClient();
+
 
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
-  const {
-    buildings,
-    selectedBuilding,
-    setSelectedBuilding,
-    user,
-  } = useAppContext();
+  const { selectedBuilding, setSelectedBuilding } = useUI();
+  const { data: buildings = [], isLoading: loadingBuildings } = useBuildings();
 
-  // while loading buildings or user, show a full‐screen loader
-  if (!user || buildings.length === 0) {
+  if (loadingBuildings || buildings.length === 0) {
     return (
       <Box
         style={{
@@ -48,6 +48,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       </Box>
     );
   }
+
 
   return (
     <>
@@ -69,7 +70,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
           buildings={buildings}
           value={selectedBuilding}
           onChange={setSelectedBuilding}
-          loading={false}
+          loading={loadingBuildings}
         />
       </Box >
 
@@ -123,9 +124,13 @@ export default function RootLayout({
             },
           }}
         >
-          <AppProvider>
-            <LayoutContent>{children}</LayoutContent>
-          </AppProvider>
+          <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+              <UIProvider>
+                <LayoutContent>{children}</LayoutContent>
+              </UIProvider>
+            </AuthProvider>
+          </QueryClientProvider>
         </MantineProvider>
       </body>
     </html>

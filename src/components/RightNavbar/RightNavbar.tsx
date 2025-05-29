@@ -12,7 +12,8 @@ import {
 } from "@mantine/core";
 import { IconTag, TablerIcon } from "@tabler/icons-react";
 import { format } from "date-fns";
-import { useAppContext } from "../../context/AppContext";
+import { useUI } from "../../context/UIContext";
+import { useIssues } from "../../hooks/useIssues";
 import classes from "../styles/Navbar.module.css";
 
 
@@ -25,12 +26,8 @@ const navItems: Array<{
   ];
 
 export function RightNavbar() {
-  const {
-    issues,
-    issuesDrawerOpened,
-    openIssuesDrawer,
-    closeIssuesDrawer,
-  } = useAppContext();
+  const { issuesDrawerOpened, openIssuesDrawer, closeIssuesDrawer } = useUI();
+  const { data: issues, isLoading } = useIssues();
 
   navItems[0].action = openIssuesDrawer;
 
@@ -44,20 +41,14 @@ export function RightNavbar() {
         position="right"
         size="sm"
       >
-        {issuesDrawerOpened && issues === null ? (
+        {issuesDrawerOpened && isLoading ? (
           <Loader />
         ) : issues && issues.length === 0 ? (
           <Text>No issues</Text>
         ) : (
           <Stack gap="md">
             {issues?.map((i) => (
-              <Card
-                key={i.id}
-                withBorder
-                radius="md"
-                p="md"
-                style={{ backgroundColor: "#fff" }}
-              >
+              <Card key={i.id} withBorder radius="md" p="md">
                 <Group justify="space-between" align="center" gap="xs">
                   <Text fw={600}>{i.roomName}</Text>
                   <Text size="xs" c="dimmed">
